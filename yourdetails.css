@@ -1,0 +1,29 @@
+/* PC Theme for Table */
+.pc-table {
+    font-family: Arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.pc-table th {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+    padding: 8px;
+    text-align: left;
+    border-bottom: 2px solid #ddd;
+}
+
+.pc-table td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Alternating row colors */
+.pc-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.pc-table tr:hover {
+    background-color: #ddd;
+}

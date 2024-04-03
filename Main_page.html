@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC Builder</title>
+    <link rel="stylesheet" type="text/css" href="mainpage.css">
+    <style>
+        #showthelist {
+            overflow-y:  auto; /* Add this to enable scrolling */
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="container">
+    <label for="purpose">For what purpose do you need a PC?</label>
+    <!-- Creating a dropdown list -->
+    <select id="purpose" name="purpose">
+        <!-- Options within the dropdown list -->
+        <option value="Gaming">Gaming</option>
+        <option value="Editing">Editing</option>
+        <option value="Shop">For my Shop</option>
+        <option value="Studies">For my Studies</option>
+    </select>
+
+    <label for="budget">What is your budget?</label>
+    <!-- Adding an input field for the budget -->
+    <input type="number" id="budget" name="budget" placeholder="Enter your budget (in INR)" min="0">
+
+    <br>
+    <button id="generate" type="submit">Get My Quotation</button>
+</div>
+<div class="showthelist-container">
+<div id="showthelist"></div>
+</div>
+<script>
+    
+    var urlParams = new URLSearchParams(window.location.search);
+    var uid = urlParams.get('uid');
+    console.log(uid);
+    if(uid == "null")
+    {
+    window.location.href = "Login1.html";
+    }
+    document.getElementById('generate').addEventListener('click', function() {
+        var purpose = document.getElementById('purpose').value;
+        var budget = parseInt(document.getElementById('budget').value);
+    
+        if (Number.isInteger(budget) && budget >= 0) {
+            // AJAX request
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'showproduct.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    document.getElementById('showthelist').innerHTML = xhr.responseText;
+                    document.getElementById('container').style.display = 'none';
+                    document.getElementById('showthelist').style.display = 'block'; // Show the quotation table
+                }
+            };
+            
+            // Append uid to the request parameters
+            var params = 'generate=true&purpose=' + purpose + '&budget=' + budget + '&uid=' + uid;
+            xhr.send(params);
+        } else {
+            alert('Please enter a valid budget (a non-negative integer).');
+        }
+    });
+    
+    function showContainer() {
+        document.getElementById('showthelist').innerHTML = '';
+        document.getElementById('container').style.display = 'block';
+    }
+    function order(invoiceNum) {
+        console.log("Invoice Number:", invoiceNum);
+        // You can perform additional actions here, such as sending the invoice number to another PHP script for further processing
+    }
+</script>
+
+</body>
+</html>

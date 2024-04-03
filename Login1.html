@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="stylesLogin.css">
+    <style>
+        a {
+            color: white;
+        }
+        /* CSS for the eye icon */
+        .password-input {
+            position: relative;
+        }
+        .toggle-password {
+            cursor: pointer;
+            color: #000;
+            position: absolute;
+            right: 5px;
+            top: 55%;
+            transform: translateY(-50%);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Login</h2>
+
+    <form id="login-form">
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <div class="password-input">
+                <input type="password" id="password" name="password" required>
+                <span class="toggle-password" onclick="togglePasswordVisibility()">
+                    <!-- Eye icon -->
+                    <img id="eyeIcon" src="show.png" alt="Show Password" width="24" height="24">
+                </span>
+            </div>
+        </div>
+
+        <div id="error-message" style="display: none;"></div>
+        <br>
+
+        <button type="button" class="btn-login" onclick="submitForm()">Login</button>
+    </form>
+
+    <p>If you don't have an account, <a href="sign_up1.html">sign up here</a>.</p>
+</div>
+
+<script>
+    function togglePasswordVisibility() {
+        var passwordInput = document.getElementById('password');
+        var eyeIcon = document.getElementById('eyeIcon');
+        
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            eyeIcon.src = 'hide.png';
+        } else {
+            passwordInput.type = 'password';
+            eyeIcon.src = 'show.png';
+        }
+    }
+
+    function submitForm() {
+        var formData = new FormData(document.getElementById('login-form'));
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'login.php', true);
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                if (response.success) {
+                    console.log(response.uid);
+                    
+                    window.location.href = "select_page.html?uid="+response.uid+"";
+                } else {
+                    document.getElementById('error-message').innerText = response.message;
+                    document.getElementById('error-message').style.display = 'block';
+                }
+            }
+        };
+        xhr.send(formData);
+    }
+</script>
+
+</body>
+</html>

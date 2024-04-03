@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PcbuildPal</title>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+ <!-- Bootstrap CSS -->
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+ <!-- Bootstrap Icons (Optional) -->
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+<style>
+    .disabled-container {
+        pointer-events: none;
+    }
+    .pc-theme {
+        display: none; /* Hide the pc-theme section by default */
+    }
+    .button-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; /* Adjust height as needed */
+    }
+
+    /* Style for the button */
+    #toggle {
+        background-color: #333; /* Background color */
+        border: none;
+        cursor: pointer;
+        outline: none;
+        padding: 0; /* Remove padding */
+    }
+    .pc-theme-buttons {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px; /* Adjust spacing as needed */
+    }
+    
+    .pc-theme-buttons button {
+        padding: 10px 20px;
+        margin: 0 10px;
+        font-size: 16px;
+        background-color: #333;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    
+    .pc-theme-buttons button:hover {
+        background-color: #555;
+    }
+    
+    /* Style for the button image */
+    #toggle img {
+        width: 30px; /* Adjust width as needed */
+        height: 30px; /* Adjust height as needed */
+        display: block; /* Ensure the image is block-level */
+    }
+</style>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="button-container">
+        <!-- Button with image -->
+        <button onclick="toggleSidebar()" id="toggle"><img name="menu-image" src="menu.png" alt="Button Image"></button>
+    </div>
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <div id="welcome" >Hi,<span id="username">User</span></div>
+  <button class="close-btn" onclick="toggleSidebar()"><i class="bi bi-x"></i></button>
+  <ul>
+    <li class="active"><a href="Login1.html" ><i class="bi bi-person"></i> Login/Register</a></li>
+    <a id="details" href="showorderdetails.php"><li><i class="bi bi-cart3"></i> Your orders</li></a>
+    <a id="details2" href="showuserdetails.php"><li><i class="bi bi-file-earmark-person"></i> Your details</li></a>
+    <a id="palwebsite" href="Main_page.html" onclick="checkuid()"><li><i class="bi bi-pc-display"></i> PCBuildPal</li></a>
+    <a href="aboutus.html"><li><i class="bi bi-info-circle"></i> About us</li></a>
+  </ul>
+</div>
+
+    <div class="title">
+        <h1>PCBuildPal</h1>
+        
+
+    </div>
+    <div class="top"></div>
+<button id="cart" onclick="opencart()"><div class="image-container"><img src="shopping-cart.png" alt="Button Image" ></div></button>
+<div class="cart">
+    <div class="pc-theme-buttons">
+        <button onclick="dontKnowPcBuild()">Don't know about PC build</button>
+        <p style="margin: 0; color:white">OR</p>
+        <button onclick="selectComponentsManually()">Select components manually</button>
+    </div>
+    <div class="pc-theme">
+        
+        <h1>Select Your component</h1>
+        <br>
+        <a id="dontknow" href="Main_page.html">Don't know about pc build</a>
+        <div class="component-list">
+            <div class="component">
+                <span>Processor </span>
+                <button id ="processors" onclick="sendbutt(this)"   class="btn-show-products">+</button>
+            </div>
+            <div class="component">
+                <span>RAM </span>
+                <button id ="ram" name="ram" onclick="sendbutt(this)" class="btn-show-products">+</button>
+            </div>
+            <div class="component">
+                <span>Storage </span>
+                <button id ="storage_type" onclick="sendbutt(this)" class="btn-show-products">+</button>
+            </div>
+            <div class="component">
+                <span>Graphics Card </span>
+                <button id ="graphics_cards" onclick="sendbutt(this)" class="btn-show-products">+</button>
+            </div>
+            <div class="component">
+                <span>Motherboard </span>
+                <button id ="motherboards" onclick="sendbutt(this)" class="btn-show-products">+</button>
+            </div>
+            <div class="component">
+                <span>SMPS </span>
+                <button id ="smps" onclick="sendbutt(this)"  class="btn-show-products">+</button>
+            </div>
+            <div class="component">
+                <span>Cabinet </span>
+                <button id ="cabinets" onclick="sendbutt(this)" class="btn-show-products">+</button>
+            </div>
+            <div class="component">
+                <span>Cooler </span>
+                <button id ="coolers"onclick="sendbutt(this)" class="btn-show-products">+</button>
+            </div>
+            <div class="component">
+                <span>Monitor </span>
+                <button id ="monitors" class="btn-show-products" onclick="sendbutt(this)">+</button>
+            </div>
+            <div class="component">
+                <span>Keyboard </span>
+                <button id ="keyboards"onclick="sendbutt(this)" class="btn-show-products">+</button>
+            </div>
+            <div class="component">
+                <span>Mouse </span>
+                <button id ="mouse"onclick="sendbutt(this)" class="btn-show-products">+</button>
+            </div>
+        </div>
+
+    </div>
+<div id="cartcontainer" class="popup">
+<div class="Header">
+ <h3 >Shopping Cart</h3>
+ <h5 class="Action">Remove all</h5>
+ </div>
+<div id="popupContentForCart" >
+
+
+ </div>
+</div>
+</div>
+<div id="popupContainer1" class="popup">
+        
+            <h3>Your specs looks great. For what purpose you are building this pc?</h3><br>
+            <select id="purpose" name="purpose">
+                
+                <option value="Gaming">Gaming</option>
+                <option value="Editing">Editing</option>
+                <option value="Shop">For my Shop</option>
+                <option value="Studies">For my Studies</option>
+            </select><br><br>
+            <button id="submit" onclick="usersubmit()" >Submit</button>
+	</div>
+        
+<div id="popupContainer" class="popup">
+<button id="closeSymbol">&times;</button>
+    <h2> Select your product</h2>
+    <div id="popupContent" >
+
+</div>
+    
+</div>
+
+<div id="overlay"></div>
+<div id="overlay2"></div>
+<script>
+    var urlParams = new URLSearchParams(window.location.search);
+
+    var uid ="";
+    uid = urlParams.get('uid');
+
+    function dontKnowPcBuild() {
+        window.location.href = "Main_page.html?uid="+uid+""; // Redirect to the page for users who don't know about PC build
+    }
+
+    function selectComponentsManually() {
+        var buttonContainer = document.querySelector('.pc-theme-buttons');
+        buttonContainer.style.display = 'none';
+        const pcTheme = document.querySelector('.pc-theme');
+        pcTheme.style.display = 'block'; // Show the PC theme section
+    }
+document.addEventListener("DOMContentLoaded", function() {
+    var openPopupBtns = document.getElementsByClassName("btn-show-products");
+    var closePopupBtn = document.getElementById("closeSymbol");
+    var popupContainer = document.getElementById("popupContainer");
+    var overlay = document.getElementById("overlay");
+
+    
+    var PopupBtn = document.getElementById("cartcontainer");
+
+
+
+
+    // Show the popup when any of the buttons is clicked
+    for (var i = 0; i < openPopupBtns.length; i++) {
+        openPopupBtns[i].addEventListener("click", function() {
+	
+            popupContainer.style.display = "block";
+            overlay.style.display = "block";
+        });
+    }
+
+    // Close the popup when the close button is clicked
+    closePopupBtn.addEventListener("click", function() {
+        popupContainer.style.display = "none";
+        overlay.style.display = "none";
+    });
+
+    // Close the popup when the overlay is clicked
+    overlay.addEventListener("click", function() {
+        popupContainer.style.display = "none";
+	PopupBtn.style.display = "none";
+        overlay.style.display = "none";
+    });
+	overlay2.addEventListener("click", function() {
+        var popupcontainer1= document.getElementById("popupContainer1");
+
+
+popupcontainer1.style.display = "none";
+        overlay2.style.display = "none";
+    });
+});
+
+
+var mycomp = [];
+var ids = [];
+function opencart()
+{  
+    var overlay = document.getElementById("overlay");
+    var PopupBtn = document.getElementById("cartcontainer");
+    PopupBtn.style.display = "block";
+    overlay.style.display = "block";
+                 viewprod();
+}
+function removeItem(array, item) {
+    var index = array.indexOf(item);
+    if (index !== -1) {
+        array.splice(index, 1); // Remove 1 element at the found index
+    }
+}
+function removeprod(prodname){
+	var item =prodname.id;
+	console.log(item);
+    var index = mycomp.indexOf(item);    
+    mycomp.splice(index, 1);     
+    ids.splice(index,1);
+    
+    viewprod();
+}
+var hkj=["hi","hello",6];
+function viewprod(){
+    sessionStorage.setItem('mycomplist', JSON.stringify(mycomp));
+
+    sessionStorage.setItem('idslist', JSON.stringify(ids));
+
+
+    var popupContentForCart = $("#popupContentForCart");
+
+    var PopupBtn = document.getElementById("cartcontainer");
+            
+        var buttonid= butid;
+        var jsonData1 = JSON.stringify(mycomp);
+        var jsonData2 = JSON.stringify(ids);
+        
+            // AJAX request
+            $.ajax({
+                url: 'fetch_cart_Details.php', // Change to your server-side script
+                type: 'POST',
+                data: { mycomp: jsonData1,ids:jsonData2 },
+                success: function(response) {
+                    console.log('AJAX request successful');
+                        popupContentForCart.html(response);
+        
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX request failed');
+                    console.error('Error:', error);
+                }
+            });
+}
+var butid;
+var tableName;
+
+// Append elements to the list
+
+function addProduct(butname)
+{
+var popupContentForCart = $("#popupContentForCart");
+
+	var popupContainer = document.getElementById("popupContainer");
+    var overlay = document.getElementById("overlay");
+	butid = butname.id;
+		var buttonid= butid;
+	var tablename = tableName;
+if (mycomp.includes(tablename)) {
+var index = mycomp.indexOf(tablename);
+
+if (index !== -1) {
+    // Use splice to remove the item at the found index
+    mycomp.splice(index, 1);
+	ids.splice(index,1);
+mycomp.push(tablename);
+	ids.push(butid);
+} 
+}
+else{
+	mycomp.push(tablename);
+	ids.push(butid);
+}
+	
+	
+
+	popupContainer.style.display = "none";
+        overlay.style.display = "none";
+}
+
+function sendbutt(clicked){
+	var popupContent = $("#popupContent");
+	var buttonName = clicked.id;
+	tableName =clicked.id; 
+	
+	$.ajax({
+      type: 'POST',
+      url: 'fetch_data.php',
+      data: {tableName:tableName },
+      success: function(response) {
+        // Handle the PHP script response if needed
+        popupContent.html(response)
+
+      }
+    });
+}
+function updatedsort()
+{
+    var cate3 ="";
+    var cate4 ="";
+    var popupContent = $("#popupContent");
+    if(tableName != "processors"&& tableName != "ram" && tableName != "motherboards" && tableName != "graphics_cards")
+    {
+        var category = document.getElementById("brand");
+var brand = category.value;
+
+var category2 = document.getElementById("socketType");
+var socketType= category2.value;
+        
+    }else{
+        var category = document.getElementById("brand");
+var brand = category.value;
+
+var category2 = document.getElementById("socketType");
+var socketType= category2.value;
+ cate3 = document.getElementById("cate3").value;
+
+
+cate4 = document.getElementById("cate4").value;
+
+    }
+	
+console.log(brand,socketType);	
+	$.ajax({
+      type: 'POST',
+      url: 'fetch_data.php',
+      data:{brand :brand ,socketType:socketType, cate3: cate3, cate4: cate4,tableName:tableName},
+      success: function(response) {
+        // Handle the PHP script response if needed
+        popupContent.html(response)
+
+      }
+    });
+
+}
+var allpresent =false;
+function offt(){
+
+var cartcontainer1= document.getElementById("cartcontainer");
+    var overlay1= document.getElementById("overlay");
+var overlay2= document.getElementById("overlay2");
+var popupcontainer1= document.getElementById("popupContainer1");
+
+cartcontainer1.style.display = "none";
+popupContainer1.style.display = "block";
+overlay2.style.display = "block";
+overlay1.style.display = "none";
+}
+var mustpresent = ["processors","ram","storage_type","motherboards","smps","cabinets"];
+function containsAllElements(list1, list2) {
+    return list2.every(element => list1.includes(element));
+  }
+function usersubmit()
+{
+var popupcontainer1= document.getElementById("popupContainer1");
+var overlay2= document.getElementById("overlay2");
+var category = document.getElementById("purpose");
+var selectedcat = category.value;
+popupcontainer1.style.display = "none";
+overlay2.style.display = "none";
+$.ajax({
+      type: 'POST',
+      url: 'insert_specs.php',
+      data: { selectedcat:selectedcat,uid:uid },
+      success: function(response) {
+        // Handle the PHP script response if needed
+        console.log(response);
+        var savedList1 = sessionStorage.getItem('mycomplist');
+                    var savedList2 = sessionStorage.getItem('idslist');
+    
+        
+        window.location.href = 'nextpage.html?uid='+uid+'';   
+
+      }
+    });
+
+    
+}
+var palweb = document.getElementById('palwebsite');
+var data="";
+
+var details2 = document.getElementById('details2');
+ 
+    details2.href +="?uid="+uid;
+    var details3 = document.getElementById('dontknow');
+ 
+    details3.href +="?uid="+uid;
+var details = document.getElementById('details');
+ 
+    details.href +="?uid="+uid;
+palweb.href +="?uid="+uid;
+
+var xhr = new XMLHttpRequest();
+xhr.open('POST', 'getusername.php', true);
+xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+xhr.onload = function () {
+    if (xhr.status === 200) {
+        var response = JSON.parse(xhr.responseText);
+        if (response.success) {
+            var data = response.username;
+            document.getElementById('username').innerText = data;
+           
+        } else {
+            console.log("No user found with the given user_id");
+        }
+    }
+};
+// Sending data in proper format
+xhr.send("uid=" + uid);
+if(data!=null){
+document.getElementById('username').innerText = data;
+}else{
+    document.getElementById('username').innerText = "User";
+}
+var savedList1 = sessionStorage.getItem('mycomplist');
+                    var savedList2 = sessionStorage.getItem('idslist');
+                    
+                    if (savedList1 !== null) {
+                    // Restore list state
+                    var mycomp = JSON.parse(savedList1);
+                }
+                if (savedList2 !== null) {
+                    // Restore list state
+                    var ids = JSON.parse(savedList2);
+                }
+function orderpage(){
+    console.log(uid);
+if(uid==null){
+    sessionStorage.setItem('mycomplist', JSON.stringify(mycomp));
+    console.log(mycomp);
+    sessionStorage.setItem('idslist', JSON.stringify(ids));
+    window.location.href = "Login1.html";
+}
+sessionStorage.setItem('mycomplist', JSON.stringify(mycomp));
+    
+    sessionStorage.setItem('idslist', JSON.stringify(ids));
+    var dataArray1 = JSON.parse(savedList1);
+var dataArray2 = JSON.parse(savedList2);
+
+// Combine data arrays into a single array
+var combinedData = [dataArray1, dataArray2];
+
+// Make an AJAX request to send the data to a PHP script
+var xhr = new XMLHttpRequest();
+xhr.open('POST', 'nextpage.php', true);
+xhr.setRequestHeader('Content-Type', 'application/json'); // Change content type to JSON
+xhr.onreadystatechange = function() {
+  if (xhr.readyState === XMLHttpRequest.DONE) {
+    if (xhr.status === 200) {
+      // Request was successful, handle response if needed
+      console.log(xhr.responseText);
+    } else {
+      // Handle errors
+      console.error('Error:', xhr.status);
+    }
+  }
+};
+xhr.send(JSON.stringify(combinedData));
+
+
+    if(containsAllElements(mycomp,mustpresent)){
+        console.log("all present");
+        allpresent = true;
+		
+	offt();
+		
+        
+    }
+    else
+    {
+
+        console.log(";(")
+        uid = urlParams.get('uid');
+        window.location.href = 'nextpage.html?uid='+uid+''; 
+    }
+
+	
+}
+</script>
+<!-- Bootstrap JS (Optional) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.style.left = (sidebar.style.left === '0px') ? '-250px' : '0px'; // Toggle sidebar position
+  }
+</script>
+
+</body>
+</html>

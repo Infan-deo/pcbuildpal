@@ -1,0 +1,49 @@
+/* signup_styles.css */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #212121; /* Black background */
+    color: #ffd700; /* Gold text */
+}
+
+.container {
+    text-align: center;
+    padding: 46px;
+    border-radius: 8px;
+    background-color: #333; /* Dark gray container */
+    width: 300px;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+form input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+.btn-signup {
+    background-color: #ffd700; /* Gold button */
+    color: #333; /* Dark gray text */
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn-signup:hover {
+    background-color: #b28900; /* Darkened gold on hover */
+}

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lottie Animation</title>
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items:baseline;
+        background-color: #333;
+    }
+    
+    #animation-container {
+        width: 300px;
+        height: 300px;
+    }
+    span {
+        color: white;
+        font-family: Arial, sans-serif;
+        font-size: 60px;
+        margin-top: 20px;
+        position: absolute;
+        top: 300px;
+        left: auto;
+    }
+    #details, #go-back {
+        color: #4CAF50;
+        font-family: Arial, sans-serif;
+        font-size: 20px;
+        margin-top: 20px;
+        position: absolute;
+    }
+
+    #details {
+        top: 420px;
+    }
+
+    #go-back {
+        top: 460px;
+    }
+  </style>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.5/lottie.min.js"></script>
+<!-- Include Lottie library via CDN -->
+
+
+<!-- Placeholder for the animation -->
+<div id="animation-container"></div>
+<span>Order Placed</span>
+<a id="details" href="showorderdetails.php">See details</a>
+<a id="go-back" href="select_page.html">Go back</a>
+<script>
+    var urlParams = new URLSearchParams(window.location.search);
+    var uid = urlParams.get('uid');
+    var goback = document.getElementById('go-back');
+    var details = document.getElementById('details');
+    goback.href +="?uid="+uid;
+    details.href +="?uid="+uid;
+// Load and play the animation
+var animationContainer = document.getElementById('animation-container');
+var animData = {
+    container: animationContainer,
+    renderer: 'svg',
+    loop: false,
+    autoplay: true,
+    path: 'Animation - order placed.json' // Path to your animation file
+};
+var anim = lottie.loadAnimation(animData);
+</script>
+
+</body>
+</html>
